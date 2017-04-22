@@ -1,148 +1,150 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<link rel='shortcut icon' href="images/favicon.ico" type='image/x-icon'/ >
-<style>
-.myButton{
-    background:url("images/but.png") no-repeat;
-    cursor:pointer;
-    border:none;
-    width:128px;
-    height:128px;
-}
-body 
-{
-	text-align:center;
-	background-color: #27164a;
-	font-weight:bold;
-	color:#1d5f57;
-	background-position: center top;
-}
-BAR
-{ 
-   position: absolute; 
-   top:3.3%; 
-   left: 35.2%; 
-   width: 100%; 
-   font-family: "Courier New", Monaco, monospace;
-   font-size: 12 px;
-}
-*:focus 
-{
-    outline: none;
-}
-Terminal
-{
-	//background: black;
-	//background-image: url("images/terminalsmall.png");
-	//background-repeat: no-repeat;
-	//background-size: 586px;
-	display: block;
-	width: 586px;
-	margin: auto;
-	font-family: "Courier New", Monaco, monospace;
-	 font-size: 12 px;
-	background-color: #1f8080;
-
-}
-div
-{
-	visibility:visible;
-	border-width: 45px 4px 4px;
-	border-style: solid;
-	-moz-border-image: url"images/terminalsmalledge.png") 45 4 4 4 repeat;
-	-webkit-border-image: url("images/terminalsmalledge.png") 45 4 4 4 repeat;
-	-o-border-image: url("images/terminalsmalledge.png") 45 4 4 4 repeat;	
-	border-image: url("images/terminalsmalledge.png") 45 4 4 4 fill repeat;
-	//margin-bottom: 20px;
-	width: 578px;
-}
-xbutton
-{
-	display:block
-	width: 16px:
-	margin: auto;
-	position:absolute;
-	transform: translate(564px);
-}
-iconclick
-{
-	display: block;
-	width: 128px;
-	margin: auto;
-}
-form
-{
-    display: inline-block;
-    text-align: center;
-}
-output{
-	display: inline-block;
-	background-color: #27164a;
-	text-align:center;
-}
-
-</style>
-
-
-
-<script type="text/javascript" language="Javascript">
-var DivCalc = (function () {
-    function DivCalc() {
-    }
-    DivCalc.lookupLevelTableByExp = function (x) {
-        var levels = [0, 83, 174, 276, 388, 512, 650, 801, 969, 1154, 1358, 1584, 1833, 2107, 2411, 2746, 3115, 3523, 3973, 4470, 5018, 5624, 6291, 7028, 7824, 8740, 9730, 10824, 12031, 13363, 14833, 16456, 18247, 20224, 22406, 24815, 27473, 30408, 33648, 37224, 41171, 45529, 50339, 55649, 61512, 67983, 75127, 83014, 91721, 101333, 111945, 123660, 136594, 150872, 166636, 184040, 203254, 224466, 247886, 273742, 302288, 333804, 368559, 407015, 449428, 496254, 547953, 605032, 668051, 737627, 814445, 899257, 992895, 1096278, 1210421, 1336443, 1475581, 1629200, 1798808, 1986068, 2192818, 2421087, 2673144, 2951373, 3258594, 3597792, 3972294, 4385776, 4842295, 5346332, 5902831, 6517253, 7195629, 7944614, 8771558, 9684577, 10692629, 11805606, 13034431, 14391160];
-        for (var i = 1; i < 98; i++) {
-            if (x < 83) {
-                return 1;
-            }
-            else if (x >= levels[i] && x <= levels[i + 1]) {
-                return i + 1;
-            }
+    <link rel='shortcut icon' href="images/favicon.ico" type='image/x-icon' />
+    <style>
+        .myButton {
+            background: url("images/but.png") no-repeat;
+            cursor: pointer;
+            border: none;
+            width: 128px;
+            height: 128px;
         }
-        return 99;
-    };
-    DivCalc.xpPerPointTable = function (x) {
-        var cachexp = [33, 34, 35, 36, 36, 37, 38, 39, 40, 50, 51, 52, 53, 54, 55, 56, 57, 58, 58, 67, 68, 69, 70, 71, 73, 74, 75, 76, 77, 81, 84, 86, 90, 92, 95, 97, 100, 103, 105, 142, 144, 147, 150, 153, 156, 158, 161, 163, 166, 208, 213, 219, 225, 230, 236, 241, 246, 251, 256, 278, 285, 291, 298, 305, 311, 317, 323, 329, 334, 358, 368, 377, 386, 395, 3404, 412, 420, 428, 435, 461, 470, 477, 482, 484, 509, 519, 527, 533, 536, 566, 579, 589, 595, 599, 679, 700, 716, 728, 734, 734];
-        if (x < 99) {
-            return cachexp[x - 1];
+
+        body {
+            text-align: center;
+            background-color: #27164a;
+            font-weight: bold;
+            color: #1d5f57;
+            background-position: center top;
         }
-        else
-            return -1;
-    };
-    DivCalc.main = function (args) {
-	document.getElementById("output").innerHTML="";
-        var exp = parseInt(document.getElementById("a").value, 10);
-        var lvl = DivCalc.lookupLevelTableByExp(exp);
-        var strlvl = lvl;
-        var j = 0;
-        while ((lvl < 99)) {
-            j++;
-            var temp = lvl;
-            for (var h = 0; h < 2; h++) {
-                var cachexp = DivCalc.xpPerPointTable(lvl) * 100;
-                exp += cachexp;
-                lvl = DivCalc.lookupLevelTableByExp(exp);
-            }
-            if (lvl > temp) {
-               document.getElementById("output").innerHTML += ("You will hit level " + lvl + " on day: " + j +"<br>");
-            }
+
+        BAR {
+            position: absolute;
+            top: 3.3%;
+            left: 35.2%;
+            width: 100%;
+            font-family: "Courier New", Monaco, monospace;
+            font-size: 12 px;
         }
-        ;
-    };
-    return DivCalc;
-}());
-DivCalc["__class"] = "DivCalc";
-</script>
 
-<body>
-<h1>GUTHIXIAN CACHE CALCULATOR</h1>
-<p>Enter your current XP and find out how many days of 200 points in caches until you reach your goal.</p>
-<form onsubmit="DivCalc.main(null);return false;">
-  Enter xp: <input type="number" id="a" min="0" max="13034431">
-  <input type="submit">
-</form>
+        *:focus {
+            outline: none;
+        }
 
-<p id="output"></p>
+        Terminal {
+            //background: black;
+            //background-image: url("images/terminalsmall.png");
+            //background-repeat: no-repeat;
+            //background-size: 586px;
+            display: block;
+            width: 586px;
+            margin: auto;
+            font-family: "Courier New", Monaco, monospace;
+            font-size: 12 px;
+            background-color: #1f8080;
+        }
 
-<body>
+        div {
+            visibility: visible;
+            border-width: 45px 4px 4px;
+            border-style: solid;
+            -moz-border-image: url"images/terminalsmalledge.png") 45 4 4 4 repeat;
+            -webkit-border-image: url("images/terminalsmalledge.png") 45 4 4 4 repeat;
+            -o-border-image: url("images/terminalsmalledge.png") 45 4 4 4 repeat;
+            border-image: url("images/terminalsmalledge.png") 45 4 4 4 fill repeat; //margin-bottom: 20px;
+            width: 578px;
+        }
+
+        xbutton {
+            display: block width: 16px: margin: auto;
+            position: absolute;
+            transform: translate(564px);
+        }
+
+        iconclick {
+            display: block;
+            width: 128px;
+            margin: auto;
+        }
+
+        form {
+            display: inline-block;
+            text-align: center;
+        }
+
+        output {
+            display: inline-block;
+            background-color: #27164a;
+            text-align: center;
+        }
+    </style>
+
+
+
+    <script type="text/javascript" language="Javascript">
+        var DivCalc = (function() {
+            function DivCalc() {}
+            DivCalc.lookupLevelTableByExp = function(x) {
+                var levels = [0, 83, 174, 276, 388, 512, 650, 801, 969, 1154, 1358, 1584, 1833, 2107, 2411, 2746, 3115, 3523, 3973, 4470, 5018, 5624, 6291, 7028, 7824, 8740, 9730, 10824, 12031, 13363, 14833, 16456, 18247, 20224, 22406, 24815, 27473, 30408, 33648, 37224, 41171, 45529, 50339, 55649, 61512, 67983, 75127, 83014, 91721, 101333, 111945, 123660, 136594, 150872, 166636, 184040, 203254, 224466, 247886, 273742, 302288, 333804, 368559, 407015, 449428, 496254, 547953, 605032, 668051, 737627, 814445, 899257, 992895, 1096278, 1210421, 1336443, 1475581, 1629200, 1798808, 1986068, 2192818, 2421087, 2673144, 2951373, 3258594, 3597792, 3972294, 4385776, 4842295, 5346332, 5902831, 6517253, 7195629, 7944614, 8771558, 9684577, 10692629, 11805606, 13034431, 14391160];
+                for (var i = 1; i < 98; i++) {
+                    if (x < 83) {
+                        return 1;
+                    } else if (x >= levels[i] && x <= levels[i + 1]) {
+                        return i + 1;
+                    }
+                }
+                return 99;
+            };
+            DivCalc.xpPerPointTable = function(x) {
+                var cachexp = [33, 34, 35, 36, 36, 37, 38, 39, 40, 50, 51, 52, 53, 54, 55, 56, 57, 58, 58, 67, 68, 69, 70, 71, 73, 74, 75, 76, 77, 81, 84, 86, 90, 92, 95, 97, 100, 103, 105, 142, 144, 147, 150, 153, 156, 158, 161, 163, 166, 208, 213, 219, 225, 230, 236, 241, 246, 251, 256, 278, 285, 291, 298, 305, 311, 317, 323, 329, 334, 358, 368, 377, 386, 395, 3404, 412, 420, 428, 435, 461, 470, 477, 482, 484, 509, 519, 527, 533, 536, 566, 579, 589, 595, 599, 679, 700, 716, 728, 734, 734];
+                if (x < 99) {
+                    return cachexp[x - 1];
+                } else
+                    return -1;
+            };
+            DivCalc.main = function(args) {
+                document.getElementById("output").innerHTML = "";
+                var exp = parseInt(document.getElementById("a").value, 10);
+                var lvl = DivCalc.lookupLevelTableByExp(exp);
+                var strlvl = lvl;
+                var j = 0;
+                while ((lvl < 99)) 
+		{
+                    j++;
+                    var temp = lvl;
+                    for (var h = 0; h < 2; h++) {
+                        var cachexp = DivCalc.xpPerPointTable(lvl) * 100;
+                        exp += cachexp;
+                        lvl = DivCalc.lookupLevelTableByExp(exp);
+                    }
+                    if (lvl > temp) {
+                        document.getElementById("output").innerHTML += ("You will hit level " + lvl + " on day: " + j + "<br>");
+                    }
+                    cachexp = DivCalc.xpPerPointTable(lvl) * 100;
+                };
+		var exp120 = 104273167-exp;
+		var exp200 = 200000000-exp;
+		var d120 = Math.ceil((exp120/146800)+j);
+		var d200 = Math.ceil((exp200/146800)+j);
+		
+		document.getElementById("output").innerHTML += ("You will hit level 120 on day: " + d120 + "<br>");
+		document.getElementById("output").innerHTML += ("You will hit 200m exp on day: " + d200 + "<br>");
+            };
+            return DivCalc;
+        }());
+        DivCalc["__class"] = "DivCalc";
+    </script>
+
+    <body>
+        <h1>GUTHIXIAN CACHE CALCULATOR</h1>
+        <p>Enter your current XP and find out how many days of 200 points in caches until you reach your goal.</p>
+        <form onsubmit="DivCalc.main(null);return false;">
+            Enter xp: <input type="number" id="a" min="0" max="13034431">
+            <input type="submit">
+        </form>
+
+        <p id="output"></p>
+
+        <body>
