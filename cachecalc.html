@@ -89,7 +89,7 @@
 				$(document).ready(function(){
 					$("button").click(function(){
 						$.ajax({
-						url: 'https://apps.runescape.com/runemetrics/profile/profile?user='+ $("#username").val()+'&activities=20',
+						url: 'https://cors-anywhere.herokuapp.com/https://apps.runescape.com/runemetrics/profile/profile?user='+ $("#username").val()+'&activities=20',
 						success: function(result){
 						console.log(result);
 						var OP = result;
