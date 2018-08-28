@@ -81,9 +81,29 @@
         }
     </style>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+    <script>
+			var exp = -1;
+			
+				$(document).ready(function(){
+					$("button").click(function(){
+						$.ajax({
+						url: 'http://services.runescape.com/m=hiscore/index_lite.ws?player='+ $("#username").val(),
+						success: function(result){
+						var resultprocessed = result.split(",");
+						exp = parseInt(resultprocessed[54], 10);
+						DivCalc.main(null);
+						},
+						error: function(result){
+						console.log("ERROR RETRIEVING HISCORES INFO");
+						console.log('http://services.runescape.com/m=hiscore/index_lite.ws?player='+ $("#username").val());
+						}
 
-
-    <script type="text/javascript" language="Javascript">
+							});
+						});
+						});
+	
         var DivCalc = (function() {
             function DivCalc() {}
             DivCalc.lookupLevelTableByExp = function(x) {
@@ -104,9 +124,16 @@
                 } else
                     return -1;
             };
+			DivCalc.usernameToExp = function(x) {
+				
+				exp = 500000;
+				DivCalc.main(null);
+			};
             DivCalc.main = function(args) {
                 document.getElementById("output").innerHTML = "";
-                var exp = parseInt(document.getElementById("a").value, 10);
+				if(exp<0){
+				exp = parseInt(document.getElementById("a").value, 10);
+				}
                 var lvl = DivCalc.lookupLevelTableByExp(exp);
                 var strlvl = lvl;
                 var j = 0;
@@ -131,6 +158,7 @@
 		
 		document.getElementById("output").innerHTML += ("You will hit level 120 on day: " + d120 + "<br>");
 		document.getElementById("output").innerHTML += ("You will hit 200m exp on day: " + d200 + "<br>");
+			exp=-1;
             };
             return DivCalc;
         }());
@@ -140,12 +168,18 @@
     <body>
         <h1>GUTHIXIAN CACHE CALCULATOR</h1>
 		<p><body><a href="index.html">Back to main page.</a></body>
-        <p>Enter your current XP and find out how many days of 200 points in caches until you reach your goal.</p>
-        <form onsubmit="DivCalc.main(null);return false;">
+        <p>Enter your username or current XP and find out how many days of 200 points in caches until you reach your goal.</p>
+        
+		Enter username: 
+			<input type="text" id="username" value="Maxweil">
+			<button>Submit</button>
+			
+		<p></p>
+		<form onsubmit="DivCalc.main(null);return false;">
             Enter xp: <input type="number" id="a" min="0" max="200000000">
             <input type="submit">
         </form>
-
+		
         <p id="output"></p>
 
         <body>
