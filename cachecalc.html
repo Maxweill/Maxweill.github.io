@@ -89,7 +89,7 @@
 				$(document).ready(function(){
 					$("button").click(function(){
 						$.ajax({
-						url: 'http://cors.io/?u=https://services.runescape.com/m=hiscore/index_lite.ws?player='+ $("#username").val(),
+						url: 'https://cors.io/?u=https://services.runescape.com/m=hiscore/index_lite.ws?player='+ $("#username").val(),
 						success: function(result){
 						var resultprocessed = result.split(",");
 						exp = parseInt(resultprocessed[54], 10);
@@ -97,7 +97,7 @@
 						},
 						error: function(result){
 						console.log("ERROR RETRIEVING HISCORES INFO");
-						console.log('http://cors.io/?u=https://services.runescape.com/m=hiscore/index_lite.ws?player='+ $("#username").val());
+						console.log('https://cors.io/?u=https://services.runescape.com/m=hiscore/index_lite.ws?player='+ $("#username").val());
 						}
 
 							});
