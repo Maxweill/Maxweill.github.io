@@ -89,15 +89,29 @@
 				$(document).ready(function(){
 					$("button").click(function(){
 						$.ajax({
-						url: 'https://cors.io/?u=https://services.runescape.com/m=hiscore/index_lite.ws?player='+ $("#username").val(),
+						url: 'https://apps.runescape.com/runemetrics/profile/profile?user='+ $("#username").val()+'&activities=20',
 						success: function(result){
-						var resultprocessed = result.split(",");
-						exp = parseInt(resultprocessed[54], 10);
+						console.log(result);
+						var OP = result;
+						
+						if(OP.error == "NO_PROFILE")
+						{
+						document.getElementById("output").innerHTML ="Couldn't find "+ $('#username').val() + " on the HiScores.";
+						return false;
+						}
+						for(var i=0;i<26;i++)
+						{
+							if (OP.skillvalues[i].id == 25)
+							{
+							exp = OP.skillvalues[i].xp/10;
+							}
+						}
+						console.log(exp);
+						
 						DivCalc.main(null);
 						},
 						error: function(result){
-						console.log("ERROR RETRIEVING HISCORES INFO");
-						console.log('https://cors.io/?u=https://services.runescape.com/m=hiscore/index_lite.ws?player='+ $("#username").val());
+						document.getElementById("output").innerHTML ="Couldn't find "+ $('#username').val() + " on the Hiscores.";
 						}
 
 							});
@@ -134,6 +148,7 @@
 				if(exp<0){
 				exp = parseInt(document.getElementById("a").value, 10);
 				}
+				console.log(exp);
                 var lvl = DivCalc.lookupLevelTableByExp(exp);
                 var strlvl = lvl;
                 var j = 0;
